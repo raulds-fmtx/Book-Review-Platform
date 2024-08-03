@@ -1,33 +1,37 @@
 import { useState, useEffect } from 'react';
-import {
-  Container,
-  Col,
-  Form,
-  Button,
-  Card,
-  Row
-} from 'react-bootstrap';
-
+import { Link } from 'react-router-dom';
+import { Container, Col, Form, Button, Card, Row } from 'react-bootstrap';
 import Auth from '../utils/auth';
 import { saveBook, searchGoogleBooks } from '../utils/API';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
 
 const SearchBooks = () => {
-  // create state for holding returned google api data
   const [searchedBooks, setSearchedBooks] = useState([]);
-  // create state for holding our search field data
   const [searchInput, setSearchInput] = useState('');
-
-  // create state to hold saved bookId values
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
+  const [darkMode, setDarkMode] = useState(false);
 
-  // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
-  // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
     return () => saveBookIds(savedBookIds);
   });
 
-  // create method to search for books and set state on form submit
+  useEffect(() => {
+    const handleScroll = () => {
+      const searchHeader = document.querySelector('.search-header');
+      const navbarHeight = document.querySelector('.navbar').offsetHeight;
+      if (window.scrollY > navbarHeight) {
+        searchHeader.classList.add('fixed-top');
+      } else {
+        searchHeader.classList.remove('fixed-top');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -49,7 +53,7 @@ const SearchBooks = () => {
         authors: book.volumeInfo.authors || ['No author to display'],
         title: book.volumeInfo.title,
         description: book.volumeInfo.description,
-        image: book.volumeInfo.imageLinks?.thumbnail || '',
+        image: book.volumeInfo.imageLinks?.thumbnail || ''
       }));
 
       setSearchedBooks(bookData);
@@ -59,12 +63,9 @@ const SearchBooks = () => {
     }
   };
 
-  // create function to handle saving a book to our database
   const handleSaveBook = async (bookId) => {
-    // find the book in `searchedBooks` state by the matching id
     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
 
-    // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
@@ -78,41 +79,41 @@ const SearchBooks = () => {
         throw new Error('something went wrong!');
       }
 
-      // if book successfully saves to user's account, save book id to state
       setSavedBookIds([...savedBookIds, bookToSave.bookId]);
     } catch (err) {
       console.error(err);
     }
   };
 
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+    document.body.classList.toggle('dark-mode', darkMode);
+    document.body.classList.toggle('light-mode', !darkMode);
+  };
+
   return (
     <>
-      <div className="text-light bg-dark p-5">
-        <Container>
-          <h1>Search for Books!</h1>
-          <Form onSubmit={handleFormSubmit}>
-            <Row>
-              <Col xs={12} md={8}>
-                <Form.Control
-                  name='searchInput'
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  type='text'
-                  size='lg'
-                  placeholder='Search for a book'
-                />
-              </Col>
-              <Col xs={12} md={4}>
-                <Button type='submit' variant='success' size='lg'>
-                  Submit Search
-                </Button>
-              </Col>
-            </Row>
-          </Form>
-        </Container>
+      <div className={`search-header d-flex justify-content-between align-items-center p-3 ${darkMode ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
+        <h1><Link to="/" className="no-underline">BookBuddy 📚</Link></h1>
+        <Form inline onSubmit={handleFormSubmit} className="d-flex search-form">
+          <Form.Control
+            name='searchInput'
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            type='text'
+            size='lg'
+            placeholder='Search by Title / Author / Keyword or ISBN'
+            className={`rounded-left ${darkMode ? 'dark-mode' : 'light-mode'}`}
+          />
+          <Button type='submit' variant='success' size='lg' className={`rounded-right ${darkMode ? 'dark-mode' : 'light-mode'}`}>
+            Search
+          </Button>
+        </Form>
+        <button onClick={toggleDarkMode} className="toggle-button">
+          {darkMode ? '🌙' : '☀️'}
+        </button>
       </div>
-
-      <Container>
+      <Container className="mt-5 pt-5">
         <h2 className='pt-5'>
           {searchedBooks.length
             ? `Viewing ${searchedBooks.length} results:`
@@ -122,13 +123,13 @@ const SearchBooks = () => {
           {searchedBooks.map((book) => {
             return (
               <Col md="4" key={book.bookId}>
-                <Card border='dark'>
+                <Card border='dark' className={`${darkMode ? 'dark-mode' : 'light-mode'}`}>
                   {book.image ? (
                     <Card.Img src={book.image} alt={`The cover for ${book.title}`} variant='top' />
                   ) : null}
                   <Card.Body>
                     <Card.Title>{book.title}</Card.Title>
-                    <p className='small'>Authors: {book.authors}</p>
+                    <p className={`small ${darkMode ? 'dark-mode' : 'light-mode'}`}>Authors: {book.authors}</p>
                     <Card.Text>{book.description}</Card.Text>
                     {Auth.loggedIn() && (
                       <Button
