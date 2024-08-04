@@ -108,7 +108,7 @@ const SearchBooks = () => {
             onChange={(e) => setSearchInput(e.target.value)}
             type='text'
             size='lg'
-            placeholder='Search by Title / Author / Keyword or ISBN'
+            placeholder='Search by Title / Author or Keyword'
             className={`rounded-left ${darkMode ? 'dark-mode' : 'light-mode'}`}
           />
           <Button type='submit' variant='success' size='lg' className={`rounded-right ${darkMode ? 'dark-mode' : 'light-mode'}`}>
@@ -144,11 +144,11 @@ const SearchBooks = () => {
                     <Col md="2" className="d-flex align-items-center justify-content-center">
                       <Button
                         disabled={savedBookIds?.some((savedBookId) => savedBookId === book.bookId)}
-                        className={`btn-info ${darkMode ? 'dark-mode' : 'light-mode'}`}
+                        className={`btn-info ${savedBookIds?.some((savedBookId) => savedBookId === book.bookId) ? 'favorited' : ''}`}
                         onClick={() => handleSaveBook(book.bookId)}>
                         {savedBookIds?.some((savedBookId) => savedBookId === book.bookId)
-                          ? 'This book has already been saved!'
-                          : 'Save this Book!'}
+                          ? 'Favorited'
+                          : 'Add to Favorites'}
                       </Button>
                     </Col>
                   )}

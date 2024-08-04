@@ -1,32 +1,25 @@
-import { useState, useEffect } from 'react';
-import {
-  Container,
-  Card,
-  Button,
-  Row,
-  Col
-} from 'react-bootstrap';
-
-import { getMe, deleteBook } from '../utils/API';
+import React, { useState, useEffect } from 'react';
+import { Container, Col, Card, Row, Button } from 'react-bootstrap';
 import Auth from '../utils/auth';
-import { removeBookId } from '../utils/localStorage';
+import { removeBookId, getSavedBookIds } from '../utils/localStorage';
+import { deleteBook } from '../utils/API';
 
 const SavedBooks = () => {
   const [userData, setUserData] = useState({});
-
-  // use this to determine if `useEffect()` hook needs to run again
-  const userDataLength = Object.keys(userData).length;
+  const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
+  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
-    const getUserData = async () => {
+    const fetchData = async () => {
+      const token = Auth.loggedIn() ? Auth.getToken() : null;
+      if (!token) {
+        return false;
+      }
+
       try {
-        const token = Auth.loggedIn() ? Auth.getToken() : null;
-
-        if (!token) {
-          return false;
-        }
-
-        const response = await getMe(token);
+        const response = await fetch('/api/users/me', {
+          headers: { 'Content-Type': 'application/json', authorization: `Bearer ${token}` },
+        });
 
         if (!response.ok) {
           throw new Error('something went wrong!');
@@ -39,10 +32,9 @@ const SavedBooks = () => {
       }
     };
 
-    getUserData();
-  }, [userDataLength]);
+    fetchData();
+  }, []);
 
-  // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -57,54 +49,56 @@ const SavedBooks = () => {
         throw new Error('something went wrong!');
       }
 
-      const updatedUser = await response.json();
-      setUserData(updatedUser);
-      // upon success, remove book's id from localStorage
-      removeBookId(bookId);
+      const updatedSavedBookIds = removeBookId(bookId);
+      setSavedBookIds(updatedSavedBookIds);
+
+      // Update userData state to remove the deleted book
+      setUserData((prevUserData) => ({
+        ...prevUserData,
+        savedBooks: prevUserData.savedBooks.filter((book) => book.bookId !== bookId),
+      }));
     } catch (err) {
       console.error(err);
     }
   };
 
-  // if data isn't here yet, say so
-  if (!userDataLength) {
-    return <h2>LOADING...</h2>;
-  }
-
   return (
-    <>
-      <div fluid className="text-light bg-dark p-5">
-        <Container>
-          <h1>Viewing saved books!</h1>
-        </Container>
-      </div>
-      <Container>
-        <h2 className='pt-5'>
-          {userData.savedBooks.length
-            ? `Viewing ${userData.savedBooks.length} saved ${userData.savedBooks.length === 1 ? 'book' : 'books'}:`
-            : 'You have no saved books!'}
-        </h2>
-        <Row>
-          {userData.savedBooks.map((book) => {
-            return (
-              <Col md="4">
-                <Card key={book.bookId} border='dark'>
-                  {book.image ? <Card.Img src={book.image} alt={`The cover for ${book.title}`} variant='top' /> : null}
+    <Container fluid className="mt-3 pt-3">
+      <h2 className={`search-results-text ${darkMode ? 'dark-mode' : 'light-mode'}`}>
+        {userData.savedBooks?.length
+          ? `Viewing ${userData.savedBooks.length} favorites:`
+          : 'You have no favorited books.'}
+      </h2>
+      <Row>
+        {userData.savedBooks?.map((book, index) => (
+          <Col md="12" key={book.bookId || index} className="mb-4">
+            <Card className={`horizontal-card ${darkMode ? 'dark-mode' : 'light-mode'}`}>
+              <Row className="no-gutters">
+                <Col md="2">
+                  {book.image && <Card.Img src={book.image} alt={`The cover for ${book.title}`} />}
+                </Col>
+                <Col md="8">
                   <Card.Body>
                     <Card.Title>{book.title}</Card.Title>
-                    <p className='small'>Authors: {book.authors}</p>
+                    <p className={`small ${darkMode ? 'dark-mode' : 'light-mode'}`}>Authors: {book.authors.join(', ')}</p>
                     <Card.Text>{book.description}</Card.Text>
-                    <Button className='btn-block btn-danger' onClick={() => handleDeleteBook(book.bookId)}>
-                      Delete this Book!
-                    </Button>
                   </Card.Body>
-                </Card>
-              </Col>
-            );
-          })}
-        </Row>
-      </Container>
-    </>
+                </Col>
+                {Auth.loggedIn() && (
+                  <Col md="2" className="d-flex align-items-center justify-content-center">
+                    <Button
+                      className={`btn-danger ${darkMode ? 'dark-mode' : 'light-mode'}`}
+                      onClick={() => handleDeleteBook(book.bookId)}>
+                      Remove from Favorites
+                    </Button>
+                  </Col>
+                )}
+              </Row>
+            </Card>
+          </Col>
+        ))}
+      </Row>
+    </Container>
   );
 };
 

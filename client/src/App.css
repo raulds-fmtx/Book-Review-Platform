@@ -264,3 +264,35 @@ h1, h2, h3, h4, h5, h6.dark-mode {
   background-color: #e74c3c;
   border-color: #e74c3c;
 }
+
+/* Hover effect for cards */
+.horizontal-card {
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.horizontal-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Delete above to remove hover effect */
+
+/* Favorited button styling */
+.favorited {
+  background-color: #28a745 !important; /* Green color */
+  border-color: #28a745 !important;
+  color: #fff !important;
+}
+
+/* Remove from Favorites button styling */
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: #fff;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+  color: #fff;
+}
