@@ -191,3 +191,76 @@ h1, h2, h3, h4, h5, h6.dark-mode {
 .no-underline {
   text-decoration: none;
 }
+
+/* Custom styles for horizontal cards */
+.horizontal-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.horizontal-card .card-img {
+  width: 150px; /* Adjust the width as needed */
+  height: auto;
+  margin-right: 20px;
+}
+
+.horizontal-card .card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.horizontal-card .card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.horizontal-card .small {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.horizontal-card .card-text {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+/* Custom styles for search results text */
+.search-results-text.light-mode {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.search-results-text.dark-mode {
+  color: #ecf0f1;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+/* Adjust margins for closer alignment */
+.mt-5.pt-5 {
+  margin-top: 2rem !important;
+  padding-top: 2rem !important;
+}
+
+/* Custom styles for Save button in cards */
+.horizontal-card .btn-info {
+  margin-left: auto;
+  align-self: center;
+  background-color: #3498db;
+  border-color: #3498db;
+  color: #fff;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+}
+
+.horizontal-card .btn-info.dark-mode {
+  background-color: #e74c3c;
+  border-color: #e74c3c;
+}

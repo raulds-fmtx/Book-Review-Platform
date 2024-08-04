@@ -12,8 +12,9 @@ const SearchBooks = () => {
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
+    document.body.classList.add('light-mode');
     return () => saveBookIds(savedBookIds);
-  });
+  }, [savedBookIds]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -87,15 +88,20 @@ const SearchBooks = () => {
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
-    document.body.classList.toggle('dark-mode', darkMode);
-    document.body.classList.toggle('light-mode', !darkMode);
+    if (!darkMode) {
+      document.body.classList.add('dark-mode');
+      document.body.classList.remove('light-mode');
+    } else {
+      document.body.classList.add('light-mode');
+      document.body.classList.remove('dark-mode');
+    }
   };
 
   return (
     <>
       <div className={`search-header d-flex justify-content-between align-items-center p-3 ${darkMode ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
         <h1><Link to="/" className="no-underline">BookBuddy 📚</Link></h1>
-        <Form inline onSubmit={handleFormSubmit} className="d-flex search-form">
+        <Form onSubmit={handleFormSubmit} className="d-flex search-form">
           <Form.Control
             name='searchInput'
             value={searchInput}
@@ -113,39 +119,43 @@ const SearchBooks = () => {
           {darkMode ? '🌙' : '☀️'}
         </button>
       </div>
-      <Container className="mt-5 pt-5">
-        <h2 className='pt-5'>
+      <Container className="mt-3 pt-3">
+        <h2 className={`search-results-text ${darkMode ? 'dark-mode' : 'light-mode'}`}>
           {searchedBooks.length
             ? `Viewing ${searchedBooks.length} results:`
             : 'Search for a book to begin'}
         </h2>
         <Row>
-          {searchedBooks.map((book) => {
-            return (
-              <Col md="4" key={book.bookId}>
-                <Card border='dark' className={`${darkMode ? 'dark-mode' : 'light-mode'}`}>
-                  {book.image ? (
-                    <Card.Img src={book.image} alt={`The cover for ${book.title}`} variant='top' />
-                  ) : null}
-                  <Card.Body>
-                    <Card.Title>{book.title}</Card.Title>
-                    <p className={`small ${darkMode ? 'dark-mode' : 'light-mode'}`}>Authors: {book.authors}</p>
-                    <Card.Text>{book.description}</Card.Text>
-                    {Auth.loggedIn() && (
+          {searchedBooks.map((book) => (
+            <Col md="12" key={book.bookId} className="mb-4">
+              <Card className={`horizontal-card ${darkMode ? 'dark-mode' : 'light-mode'}`}>
+                <Row className="no-gutters">
+                  <Col md="2">
+                    {book.image && <Card.Img src={book.image} alt={`The cover for ${book.title}`} />}
+                  </Col>
+                  <Col md="8">
+                    <Card.Body>
+                      <Card.Title>{book.title}</Card.Title>
+                      <p className={`small ${darkMode ? 'dark-mode' : 'light-mode'}`}>Authors: {book.authors.join(', ')}</p>
+                      <Card.Text>{book.description}</Card.Text>
+                    </Card.Body>
+                  </Col>
+                  {Auth.loggedIn() && (
+                    <Col md="2" className="d-flex align-items-center justify-content-center">
                       <Button
                         disabled={savedBookIds?.some((savedBookId) => savedBookId === book.bookId)}
-                        className='btn-block btn-info'
+                        className={`btn-info ${darkMode ? 'dark-mode' : 'light-mode'}`}
                         onClick={() => handleSaveBook(book.bookId)}>
                         {savedBookIds?.some((savedBookId) => savedBookId === book.bookId)
                           ? 'This book has already been saved!'
                           : 'Save this Book!'}
                       </Button>
-                    )}
-                  </Card.Body>
-                </Card>
-              </Col>
-            );
-          })}
+                    </Col>
+                  )}
+                </Row>
+              </Card>
+            </Col>
+          ))}
         </Row>
       </Container>
     </>
