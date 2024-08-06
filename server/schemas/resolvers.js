@@ -12,8 +12,7 @@ const resolvers = {
             { username: username },
           ],
         })
-        .select("-__v -password")
-        .populate("savedBooks");
+        .select("-__v -password");
 
       if (!userData) {
         throw new AuthenticationError("You need to be logged in!");
@@ -58,7 +57,7 @@ const resolvers = {
         { _id: user._id},
         { $addToSet: { savedBooks: bookData } },
         { new: true }
-      ).populate('savedBooks');
+      );
 
       return updatedUser;
     },
