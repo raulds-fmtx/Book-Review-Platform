@@ -26,6 +26,27 @@ const bookSchema = new Schema({
     type: String,
     required: true,
   },
+  rating: {
+    type: Number,
+    min: 0,
+    max: 5,
+    default: 0,
+  },
+  review: {
+    type: String,
+  },
+  readerStatus: {
+    /*
+      0 : Unread
+      1 : Actively reading
+      2 : Completed
+    */
+    type: Number,
+    required: true,
+    min: 0,
+    max: 2,
+    default: 0,
+  },
 });
 
 module.exports = bookSchema;
