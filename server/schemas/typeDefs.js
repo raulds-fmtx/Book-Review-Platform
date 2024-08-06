@@ -18,6 +18,7 @@ const typeDefs = gql`
     link: String
     rating: Float
     review: String
+    readerStatus: Int
   }
 
   type Auth {
@@ -43,6 +44,7 @@ const typeDefs = gql`
     removeBook(bookId: String!): User
     rateBook(bookId: String!, rating: Float!): User
     reviewBook(bookId: String!, review: String!): User
+    setReaderStatus(bookId: String!, readStatus: Int!): User
   }
 `;
 

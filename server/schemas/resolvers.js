@@ -44,21 +44,18 @@ const resolvers = {
       return { token, user };
     },
     saveBook: async (parent, { bookData }, { user }) => {
-      if (!user) {
-        throw new AuthenticationError("You need to be logged in!");
+      if (user) {
+        return await User.findOneAndUpdate(
+          { _id: user._id },
+          { $addToSet: { savedBooks: bookData } },
+          { new: true }
+        );
       }
-
-      const updatedUser = await User.findOneAndUpdate(
-        { _id: user._id },
-        { $addToSet: { savedBooks: bookData } },
-        { new: true }
-      );
-
-      return updatedUser;
+      throw new AuthenticationError("You need to be logged in!");
     },
     removeBook: async (parent, { bookId }, { user }) => {
       if (user) {
-        return User.findOneAndUpdate(
+        return await User.findOneAndUpdate(
           { _id: user._id },
           { $pull: { savedBooks: { bookId } } },
           { new: true }
@@ -67,31 +64,35 @@ const resolvers = {
       throw new AuthenticationError("You need to be logged in!");
     },
     rateBook: async (parent, { bookId, rating }, { user }) => {
-      if (!user) {
-        throw new AuthenticationError("You need to be logged in!");
+      if (user) {
+        return await User.findOneAndUpdate(
+          { _id: user._id, "savedBooks.bookId": bookId },
+          { $set: { "savedBooks.$.rating": rating } },
+          { new: true }
+        );
       }
-
-      const updatedUser = await User.findOneAndUpdate(
-        { _id: user._id, "savedBooks.bookId": bookId },
-        { $set: { "savedBooks.$.rating": rating } },
-        { new: true }
-      );
-
-      return updatedUser;
+      throw new AuthenticationError("You need to be logged in!");
     },
     reviewBook: async (parent, { bookId, review }, { user }) => {
-      if (!user) {
-        throw new AuthenticationError("You need to be logged in!");
+      if (user) {
+        return await User.findOneAndUpdate(
+          { _id: user._id, "savedBooks.bookId": bookId },
+          { $set: { "savedBooks.$.review": review } },
+          { new: true }
+        );
       }
-
-      const updatedUser = await User.findOneAndUpdate(
-        { _id: user._id, "savedBooks.bookId": bookId },
-        { $set: { "savedBooks.$.review": review } },
-        { new: true }
-      );
-
-      return updatedUser;
+      throw new AuthenticationError("You need to be logged in!");
     },
+    setReaderStatus: async (parent, { bookId, readerStatus }, { user }) => {
+      if (user) {
+        return await User.findOneAndUpdate(
+          { _id: user._id, "savedBooks.bookId": bookId },
+          { $set: { "savedBooks.$.readerStatus": readerStatus } },
+          { new: true }
+        );
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    }
   },
 };
 
