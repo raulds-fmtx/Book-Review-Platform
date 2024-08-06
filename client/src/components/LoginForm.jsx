@@ -11,7 +11,7 @@ const LoginForm = () => {
   const [showAlert, setShowAlert] = useState(false);
 
   // Use mutation hook for LOGIN_USER
-  const [loginUser] = useMutation(LOGIN_USER);
+  const [login, { error }] = useMutation(LOGIN_USER);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -21,6 +21,8 @@ const LoginForm = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
+    //const { email, password } = userFormData;
+
     // check if form has everything (as per react-bootstrap docs)
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -29,20 +31,17 @@ const LoginForm = () => {
     }
 
     try {
-      // Execute the LOGIN_USER mutation
-      const { data } = await loginUser({
-        variables: { ...userFormData }
-      });
-
-      const { token } = data.loginUser;
-
-      if (!token) {
-        throw new Error('Something went wrong!');
+      const { data } = await login({ variables: { ...userFormData } });
+      
+      if (!data || !data.login) {
+        throw new Error('No user data returned');
       }
 
-      Auth.login(token);
+      //const { token, user } = data.loginUser;
+
+      Auth.login(data.login.token);
     } catch (err) {
-      console.error(err);
+      console.error('Error during login: ', err);
       setShowAlert(true);
     }
 
