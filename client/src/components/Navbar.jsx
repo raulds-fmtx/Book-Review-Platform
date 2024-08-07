@@ -15,7 +15,7 @@ const AppNavbar = () => {
           <Navbar.Toggle aria-controls='navbar' />
           <Navbar.Collapse id='navbar' className='d-flex justify-content-between'>
             <Nav>
-              <Nav.Link onClick={() => setShowModal(true)}>My Account</Nav.Link>
+              <Nav.Link onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>
             </Nav>
             <Nav className='ml-auto'>
               <Nav.Link as={Link} to='/'>

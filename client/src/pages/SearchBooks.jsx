@@ -97,6 +97,13 @@ const SearchBooks = () => {
     }
   };
 
+  const handleMouseLeave = (event) => {
+    const scrollableText = event.currentTarget.querySelector('.scrollable-text');
+    if (scrollableText) {
+      scrollableText.scrollTop = 0;
+    }
+  };
+
   return (
     <>
       <div className={`search-header d-flex justify-content-between align-items-center p-3 ${darkMode ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
@@ -128,16 +135,18 @@ const SearchBooks = () => {
         <Row>
           {searchedBooks.map((book) => (
             <Col md="12" key={book.bookId} className="mb-4">
-              <Card className={`horizontal-card ${darkMode ? 'dark-mode' : 'light-mode'}`}>
+              <Card className={`horizontal-card ${darkMode ? 'dark-mode' : 'light-mode'}`} onMouseLeave={handleMouseLeave}>
                 <Row className="no-gutters">
                   <Col md="2">
-                    {book.image && <Card.Img src={book.image} alt={`The cover for ${book.title}`} />}
+                    {book.image && <Card.Img src={book.image} alt={`The cover for ${book.title}`} className="book-image" />}
                   </Col>
                   <Col md="8">
-                    <Card.Body>
+                    <Card.Body className="card-body">
                       <Card.Title>{book.title}</Card.Title>
                       <p className={`small ${darkMode ? 'dark-mode' : 'light-mode'}`}>Authors: {book.authors.join(', ')}</p>
-                      <Card.Text>{book.description}</Card.Text>
+                      <div className="scrollable-text">
+                        <Card.Text>{book.description}</Card.Text>
+                      </div>
                     </Card.Body>
                   </Col>
                   {Auth.loggedIn() && (
