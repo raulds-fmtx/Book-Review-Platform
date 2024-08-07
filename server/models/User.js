@@ -1,6 +1,5 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
-const { reviewSchema } = require('./Review');
 const { readStatusSchema } = require('./ReadStatus');
 
 const userSchema = new Schema(
@@ -22,7 +21,6 @@ const userSchema = new Schema(
     },
     // saved books by bookId
     savedBooks: [String],
-    reviews: [reviewSchema],
     readStatuses: [readStatusSchema],
   },
   // set this to use virtual below

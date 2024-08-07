@@ -5,7 +5,7 @@ const reviewStatus = new Schema({
     type: String,
     required: true,
   },
-  bookId: {
+  username: {
     type: String,
     required: true,
   },

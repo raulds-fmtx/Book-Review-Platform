@@ -28,7 +28,7 @@ const typeDefs = gql`
 
   type Review {
     review: String!
-    bookId: String!
+    username: String!
   }
 
   type ReadStatus {
@@ -52,8 +52,8 @@ const typeDefs = gql`
     addUser(username: String!, email: String!, password: String!): Auth
     saveBook(bookId: String!): User
     removeBook(bookId: String!): User
-    rateBook(bookId: String!, rating: Float!): User
-    reviewBook(bookId: String!, review: String!): User
+    rateBook(bookId: String!, rating: Float!): Book
+    reviewBook(bookId: String!, review: String!): Book
     setReaderStatus(bookId: String!, readStatus: Int!): User
   }
 `;
