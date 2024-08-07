@@ -1,7 +1,7 @@
 const { Schema } = require("mongoose");
 
 const reviewStatus = new Schema({
-  readStatus: {
+  review: {
     type: String,
     required: true,
   },
