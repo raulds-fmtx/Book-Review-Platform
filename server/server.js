@@ -10,7 +10,10 @@ const db = require("./config/connection");
 // Import ApolloServer from the apollo-server-express package for setting up a GraphQL server
 const { ApolloServer } = require("apollo-server-express");
 
+// Import type definitions and resolvers for the GraphQL schema
 const { typeDefs, resolvers } = require("./schemas");
+
+// Import authentication middleware for securing the GraphQL context
 const { authMiddleware } = require("./utils/auth");
 
 const app = express();
