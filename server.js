@@ -22,6 +22,7 @@ const PORT = process.env.PORT || 3001;
 // Create an instance of the Express application
 const app = express();
 
+// Create a new instance of ApolloServer with the specified type definitions, resolvers, and context
 const server = new ApolloServer({
   typeDefs,
   resolvers,
