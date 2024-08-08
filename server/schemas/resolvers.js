@@ -1,6 +1,20 @@
 const { AuthenticationError } = require("apollo-server-express");
-const { User } = require("../models");
+const { User, Book } = require("../models");
 const { signToken } = require("../utils/auth");
+
+//FIXME
+/**
+ * Update typeDefs
+ * 
+ * Add book by user and general book queries 
+ * 
+ * Set saveBook and removeBook to save bookId's
+ * removeBook should not delete associated ReadStatus, Rating, or Review
+ * 
+ * rateBook creates and or updates rating by user and returns updated book (avgRating is Updated).
+ * reviewBook creates and or updates review by user and returns updated book.
+ * setReaderStatus creates and or updates readerStatus by book and returns updated user.
+ */
 
 const resolvers = {
   Query: {
@@ -14,6 +28,37 @@ const resolvers = {
       }
 
       return userData;
+    },
+    getBook: async (parent, { bookId }) => {
+      const bookData = await Book.findOne({ bookId }).select("-__v -ratings -reviews");
+
+      if (!bookData) {
+        throw new AuthenticationError("Book not found");
+      }
+
+      return bookData;
+    },
+    getBookByUser: async (parent, { bookId, id, username }, { user }) => {
+      if (!user) {
+        throw new AuthenticationError("You need to be logged in!");
+      }
+      
+      const bookData = await Book.findOne({ bookId });
+
+      if (!bookData) {
+        throw new AuthenticationError("Book not found");
+      }
+
+      const userRating = bookData.ratings.find(rating => rating.username === user.username);
+      const userReview = bookData.reviews.find(review => review.username === user.username);
+
+      const bookDataWithUser = {
+        ...bookData.select("-__v -ratings -reviews").toObject(),
+        userRating: userRating ? userRating.rating : null,
+        userReview: userReview ? userReview.review : null,
+      };
+
+      return bookDataWithUser;
     },
   },
   Mutation: {

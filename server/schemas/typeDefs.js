@@ -6,7 +6,8 @@ const typeDefs = gql`
     username: String!
     email: String!
     bookCount: Int
-    savedBooks: [Book]
+    savedBooks: [String]
+    readStatuses: [ReadStatus]
   }
 
   type Book {
@@ -16,9 +17,19 @@ const typeDefs = gql`
     title: String!
     image: String
     link: String
-    rating: Float
-    review: String
-    readerStatus: Int
+    avgRating: Float
+  }
+
+  type BookWithUserDetails {
+    bookId: String!
+    authors: [String]
+    description: String!
+    title: String!
+    image: String
+    link: String
+    avgRating: Float
+    userRating: Int
+    userReview: String
   }
 
   type Rating {
