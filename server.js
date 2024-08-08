@@ -26,9 +26,10 @@ const app = express();
 const server = new ApolloServer({
  typeDefs,   // The GraphQL type definitions
   resolvers,  // The resolvers for the GraphQL schema
-  context: authMiddleware,
+   context: authMiddleware,  // The authentication middleware to secure the GraphQL context
 });
 
+// Additional server setup and initialization will follow
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
