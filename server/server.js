@@ -56,13 +56,16 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-  // app.use(routes);
+  // Uncomment and use this line if you have route handlers defined in a separate file
+// app.use(routes);
 
-  db.once("open", () => {
-    app.listen(PORT, () =>
-      console.log(`🌍 Now listening on localhost:${PORT}`)
-    );
-  });
-}
+// Open a connection to the database and start the server once the connection is successful
+db.once("open", () => {
+  // Start the Express server on the specified port and log a message to the console
+  app.listen(PORT, () =>
+    console.log(`🌍 Now listening on localhost:${PORT}`)
+  );
+});
 
+// Call the startServer function to initialize and start the Apollo Server and Express application
 startServer();
