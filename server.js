@@ -40,13 +40,12 @@ app.use(express.json());
 
 // if we're in production, serve client/build as static assets
 if (process.env.NODE_ENV === 'production') {
+// Check if the application is running in production mode
+if (process.env.NODE_ENV === 'production') {
+  // Serve static files from the 'client/build' directory
+  // This is where the production build of the React app is located
   app.use(express.static(path.join(__dirname, '../client/build')));
 }
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build/index.html'));
-});
-
 // Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async (typeDefs, resolvers) => {
   await server.start();
