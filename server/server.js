@@ -31,8 +31,12 @@ async function startServer() {
     resolvers,
     context: ({ req }) => ({ req, authMiddleware }), // Include the request and auth middleware in the context
   });
-  await server.start();
-  server.applyMiddleware({ app });
+ // Start the Apollo Server
+await server.start();
+
+// Apply the Apollo Server middleware to the Express application
+server.applyMiddleware({ app });
+
 
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
