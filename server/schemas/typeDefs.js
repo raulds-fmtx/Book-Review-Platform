@@ -5,7 +5,6 @@ const typeDefs = gql`
     _id: ID
     username: String!
     email: String!
-    bookCount: Int
     savedBooks: [String]
     readStatuses: [ReadStatus]
   }
@@ -33,7 +32,7 @@ const typeDefs = gql`
   }
 
   type Rating {
-    rating: Int
+    rating: Int!
     username: String!
   }
 
@@ -43,7 +42,7 @@ const typeDefs = gql`
   }
 
   type ReadStatus {
-    readStatus: Int
+    readStatus: Int!
     bookId: String!
   }
 
@@ -55,7 +54,7 @@ const typeDefs = gql`
   type Query {
     me(id: String, username: String): User
     getBook(bookId: String!): Book
-    getBookByUser(bookId: String!, id: String, username: String): Book
+    getBookByUser(bookId: String!, id: String, username: String): BookWithUserDetails
   }
 
   type Mutation {
@@ -63,8 +62,8 @@ const typeDefs = gql`
     addUser(username: String!, email: String!, password: String!): Auth
     saveBook(bookId: String!): User
     removeBook(bookId: String!): User
-    rateBook(bookId: String!, rating: Float!): Book
-    reviewBook(bookId: String!, review: String!): Book
+    rateBook(bookId: String!, rating: Int!): BookWithUserDetails
+    reviewBook(bookId: String!, review: String!): BookWithUserDetails
     setReaderStatus(bookId: String!, readStatus: Int!): User
   }
 `;
