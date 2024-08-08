@@ -44,9 +44,11 @@ app.use(express.urlencoded({ extended: true }));
 // Middleware to parse incoming JSON requests
 app.use(express.json());
 
-  // if we're in production, serve client/build as static assets
-  if (process.env.NODE_ENV === "production") {
-    app.use(express.static(path.join(__dirname, "../client/build")));
+  // Check if the application is running in production mode
+if (process.env.NODE_ENV === "production") {
+  // Serve static files from the 'client/build' directory
+  app.use(express.static(path.join(__dirname, "../client/build")));
+
 
     app.get("*", (req, res) => {
       res.sendFile(path.join(__dirname, "../client/build/index.html"));
