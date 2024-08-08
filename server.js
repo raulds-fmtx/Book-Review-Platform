@@ -24,8 +24,8 @@ const app = express();
 
 // Create a new instance of ApolloServer with the specified type definitions, resolvers, and context
 const server = new ApolloServer({
-  typeDefs,
-  resolvers,
+ typeDefs,   // The GraphQL type definitions
+  resolvers,  // The resolvers for the GraphQL schema
   context: authMiddleware,
 });
 
