@@ -5,6 +5,8 @@ const db = require("./config/connection");
 const { ApolloServer } = require("apollo-server-express");
 const { typeDefs, resolvers } = require("./schemas");
 const { authMiddleware } = require("./utils/auth");
+// importing stripe checkout route
+const checkoutRoute = require('./routes/api/checkout');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -19,8 +21,11 @@ async function startServer() {
   await server.start();
   server.applyMiddleware({ app });
 
-  app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
+
+  //Stripe checkout route added 
+  app.use('/api', checkoutRoute);
 
   // if we're in production, serve client/build as static assets
   if (process.env.NODE_ENV === "production") {
