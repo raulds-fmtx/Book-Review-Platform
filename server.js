@@ -8,9 +8,11 @@ const path = require('path');
 
 // Import the authentication middleware to secure GraphQL context
 const { authMiddleware } = require('./utils/auth');
+// Import type definitions and resolvers for the GraphQL schema
 const { typeDefs, resolvers } = require('./schemas');
-const db = require('./config/connection');
 
+// Import the database connection configuration from a local file
+const db = require('./config/connection');
 // not needed for GraphQL API
 // const routes = require('./routes');
 
