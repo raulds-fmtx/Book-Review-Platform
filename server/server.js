@@ -23,13 +23,14 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 
+// Define an asynchronous function to start the ApolloServer
 async function startServer() {
+  // Create a new instance of ApolloServer with the specified type definitions, resolvers, and context
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: ({ req }) => ({ req, authMiddleware }),
+    context: ({ req }) => ({ req, authMiddleware }), // Include the request and auth middleware in the context
   });
-
   await server.start();
   server.applyMiddleware({ app });
 
