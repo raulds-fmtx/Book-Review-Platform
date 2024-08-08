@@ -38,8 +38,11 @@ await server.start();
 server.applyMiddleware({ app });
 
 
-  app.use(express.urlencoded({ extended: true }));
-  app.use(express.json());
+// Middleware to parse URL-encoded data with the querystring library (extended: true)
+app.use(express.urlencoded({ extended: true }));
+
+// Middleware to parse incoming JSON requests
+app.use(express.json());
 
   // if we're in production, serve client/build as static assets
   if (process.env.NODE_ENV === "production") {
