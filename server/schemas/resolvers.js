@@ -49,7 +49,7 @@ const resolvers = {
           { _id: user._id },
           { $addToSet: { savedBooks: bookData } },
           { new: true }
-        );
+        ).select("-__v -password");
       }
       throw new AuthenticationError("You need to be logged in!");
     },
@@ -59,7 +59,7 @@ const resolvers = {
           { _id: user._id },
           { $pull: { savedBooks: { bookId } } },
           { new: true }
-        );
+        ).select("-__v -password");
       }
       throw new AuthenticationError("You need to be logged in!");
     },
@@ -69,7 +69,7 @@ const resolvers = {
           { _id: user._id, "savedBooks.bookId": bookId },
           { $set: { "savedBooks.$.rating": rating } },
           { new: true }
-        );
+        ).select("-__v -password");
       }
       throw new AuthenticationError("You need to be logged in!");
     },
@@ -79,7 +79,7 @@ const resolvers = {
           { _id: user._id, "savedBooks.bookId": bookId },
           { $set: { "savedBooks.$.review": review } },
           { new: true }
-        );
+        ).select("-__v -password");
       }
       throw new AuthenticationError("You need to be logged in!");
     },
@@ -89,7 +89,7 @@ const resolvers = {
           { _id: user._id, "savedBooks.bookId": bookId },
           { $set: { "savedBooks.$.readerStatus": readerStatus } },
           { new: true }
-        );
+        ).select("-__v -password");
       }
       throw new AuthenticationError("You need to be logged in!");
     }
