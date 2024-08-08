@@ -1,4 +1,7 @@
+// Import the Express framework to build web applications and APIs
 const express = require('express');
+
+// Import ApolloServer from the apollo-server-express package for setting up a GraphQL server
 const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
 const { authMiddleware } = require('./utils/auth');
