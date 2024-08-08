@@ -16,8 +16,12 @@ const db = require('./config/connection');
 // not needed for GraphQL API
 // const routes = require('./routes');
 
+// Define the port number for the server, using the environment variable PORT if available, otherwise defaulting to 3001
 const PORT = process.env.PORT || 3001;
+
+// Create an instance of the Express application
 const app = express();
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
