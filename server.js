@@ -30,7 +30,12 @@ const server = new ApolloServer({
 });
 
 // Additional server setup and initialization will follow
+// Middleware to parse URL-encoded data with the querystring library (extended: false)
+// This allows for simple objects to be encoded into the URL-encoded format
 app.use(express.urlencoded({ extended: false }));
+
+// Middleware to parse incoming JSON requests
+// This makes it easier to handle JSON data in requests
 app.use(express.json());
 
 // if we're in production, serve client/build as static assets
