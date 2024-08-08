@@ -176,7 +176,7 @@ const resolvers = {
 
       return updatedBookData;
     },
-    setReaderStatus: async (parent, { bookId, readerStatus }, { user }) => {
+    setReaderStatus: async (parent, { bookId, readStatus }, { user }) => {
       if (!user) {
         throw new AuthenticationError("You need to be logged in!");
       }
