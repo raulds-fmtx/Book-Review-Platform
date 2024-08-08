@@ -16,8 +16,12 @@ const { typeDefs, resolvers } = require("./schemas");
 // Import authentication middleware for securing the GraphQL context
 const { authMiddleware } = require("./utils/auth");
 
+// Create an instance of the Express application
 const app = express();
+
+// Define the port number for the server, either from the environment variable or defaulting to 3001
 const PORT = process.env.PORT || 3001;
+
 
 async function startServer() {
   const server = new ApolloServer({
