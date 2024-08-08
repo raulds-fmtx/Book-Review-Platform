@@ -4,9 +4,12 @@ const express = require("express");
 // Import the built-in Path module from Node.js, which provides utilities for working with file and directory paths
 const path = require("path");
 
+// Import the database connection configuration from a local file
 const db = require("./config/connection");
-// const routes = require("./routes");
+
+// Import ApolloServer from the apollo-server-express package for setting up a GraphQL server
 const { ApolloServer } = require("apollo-server-express");
+
 const { typeDefs, resolvers } = require("./schemas");
 const { authMiddleware } = require("./utils/auth");
 
