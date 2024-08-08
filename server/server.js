@@ -1,5 +1,9 @@
+// Import the Express framework, which is used for building web applications and APIs
 const express = require("express");
+
+// Import the built-in Path module from Node.js, which provides utilities for working with file and directory paths
 const path = require("path");
+
 const db = require("./config/connection");
 // const routes = require("./routes");
 const { ApolloServer } = require("apollo-server-express");
