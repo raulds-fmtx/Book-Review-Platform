@@ -3,7 +3,10 @@ const express = require('express');
 
 // Import ApolloServer from the apollo-server-express package for setting up a GraphQL server
 const { ApolloServer } = require('apollo-server-express');
+// Import the built-in path module from Node.js to handle and transform file paths
 const path = require('path');
+
+// Import the authentication middleware to secure GraphQL context
 const { authMiddleware } = require('./utils/auth');
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
