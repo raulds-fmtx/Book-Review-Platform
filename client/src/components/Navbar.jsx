@@ -23,6 +23,10 @@ const AppNavbar = () => {
               <Nav.Link as={Link} to='/'>
                 Search For Books
               </Nav.Link>
+              {/* stripe  donation link*/}
+              <Nav.Link as={Link} to='/donation'>
+                Donations
+              </Nav.Link>
               {/* if user is logged in show saved books and logout */}
               {Auth.loggedIn() ? (
                 <>
