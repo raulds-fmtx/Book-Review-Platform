@@ -5,3 +5,13 @@ export const searchGoogleBooks = (query) => {
     `https://www.googleapis.com/books/v1/volumes?q=${query}&key=AIzaSyBOZpIHo-PKvqz7q30OLsjSWlux74iPMM8`
   );
 };
+
+export const createPaymentIntent = () => {
+  return fetch("/api/checkout/create-payment-intent", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ amount: 1000 }), // amount in cents
+  });
+};
