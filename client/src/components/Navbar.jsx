@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
 import SignUpForm from './SignupForm';
 import LoginForm from './LoginForm';
+import checkoutForm from '../pages/checkoutPage';
 
 import Auth from '../utils/auth';
 
@@ -22,6 +23,10 @@ const AppNavbar = () => {
             <Nav className='ml-auto d-flex'>
               <Nav.Link as={Link} to='/'>
                 Search For Books
+              </Nav.Link>
+              {/* stripe  donation link*/}
+              <Nav.Link as={Link} to='/donation'>
+                Donations
               </Nav.Link>
               {/* if user is logged in show saved books and logout */}
               {Auth.loggedIn() ? (

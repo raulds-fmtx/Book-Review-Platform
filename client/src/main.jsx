@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import App from './App.jsx'
 import SearchBooks from './pages/SearchBooks'
 import SavedBooks from './pages/SavedBooks'
+import CheckoutPage from './pages/checkoutPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
       }, {
         path: '/saved',
         element: <SavedBooks />
+      },
+      {
+        path: '/donation',
+        element: <CheckoutPage />
       }
     ]
   }
