@@ -7,13 +7,15 @@ import {
 } from '@apollo/client';
 import { Outlet } from 'react-router-dom';
 import { setContext } from '@apollo/client/link/context';
-
-
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 import Navbar from './components/Navbar';
 
 const httpLink = createHttpLink({
   uri: 'http://localhost:3001/graphql',
 });
+
+const stripePromise = loadStripe(import.meta.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('id_token');
@@ -34,6 +36,7 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
+      <Elements stripe={stripePromise}></Elements>
       <Navbar />
       <Outlet />
     </ApolloProvider>
