@@ -13,7 +13,11 @@ async function startServer() {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: ({ req }) => ({ req, authMiddleware }),
+    context: async ({ req }) => {
+      // Use authMiddleware and return the user context
+      const authContext = await authMiddleware({ req });
+      return authContext; // Return the user context
+    },
   });
 
   await server.start();

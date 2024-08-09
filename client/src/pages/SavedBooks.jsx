@@ -13,7 +13,7 @@ import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
 
 const SavedBooks = () => {
-  const { loading, data } = useQuery(GET_ME);
+  const { loading, error, data } = useQuery(GET_ME);
   const [removeBook] = useMutation(REMOVE_BOOK);
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
@@ -45,8 +45,17 @@ const SavedBooks = () => {
     return <h2>LOADING...</h2>;
   }
 
+  // Handle error state
+  if (error) {
+    return <h2>Error loading saved books!</h2>;
+  }
+
   // Extract userData from query data
-  const userData = data.me;
+  const userData = data?.me;
+
+  if (!userData || !userData.savedBooks) {
+    return <h2>No saved books found!</h2>;
+  }
   
   return (
     <>

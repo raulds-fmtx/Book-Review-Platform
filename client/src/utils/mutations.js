@@ -7,6 +7,7 @@ export const LOGIN_USER = gql`
       user {
         _id
         username
+        email
       }
     }
   }
@@ -30,7 +31,6 @@ export const SAVE_BOOK = gql`
       _id
       username
       email
-      bookCount
       savedBooks {
         bookId
         authors
