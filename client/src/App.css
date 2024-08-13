@@ -1,19 +1,302 @@
-body {
+/* Light Mode */
+body.light-mode {
   font-family: 'Rubik', sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6.light-mode {
   font-family: 'Rubik Mono One', sans-serif;
+  color: #2c3e50;
 }
 
-.small {
+.small.light-mode {
   font-weight: 300;
   font-style: italic;
+  color: #7f8c8d;
+}
+
+/* Custom Button Styles for Light Mode */
+.btn-success.light-mode {
+  background-color: #3498db;
+  border-color: #3498db;
+  color: #fff;
+}
+
+.btn-success.light-mode:hover {
+  background-color: #2980b9;
+  border-color: #2980b9;
+  color: #fff;
+}
+
+/* Custom Form Styles for Light Mode */
+.form-control.light-mode {
+  border-radius: 0.25rem 0 0 0.25rem;
+  border-color: #bdc3c7;
+  box-shadow: none;
+  display: inline-block;
+  flex-grow: 1;
+}
+
+.form-control.light-mode:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+/* Custom Alert Styles for Light Mode */
+.alert-danger.light-mode {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+/* Custom Navbar Styles for Light Mode */
+.navbar-dark.light-mode .navbar-brand {
+  color: #333;
+}
+
+.navbar-dark.light-mode .navbar-nav .nav-link {
+  color: #333;
+}
+
+.navbar-dark.light-mode .navbar-nav .nav-link:hover {
+  color: #2980b9;
+}
+
+.navbar.light-mode {
+  background-color: #ecf0f1;
+}
+
+/* Custom Card Styles for Light Mode */
+.card.light-mode {
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  color: #333;
+}
+
+/* Dark Mode */
+body.dark-mode {
+  font-family: 'Rubik', sans-serif;
+  background-color: #2c3e50;
+  color: #ecf0f1;
+}
+
+h1, h2, h3, h4, h5, h6.dark-mode {
+  font-family: 'Rubik Mono One', sans-serif;
+  color: #ecf0f1;
+}
+
+.small.dark-mode {
+  font-weight: 300;
+  font-style: italic;
+  color: #bdc3c7;
+}
+
+/* Custom Button Styles for Dark Mode */
+.btn-success.dark-mode {
+  background-color: #e74c3c;
+  border-color: #e74c3c;
+  color: #fff;
+}
+
+.btn-success.dark-mode:hover {
+  background-color: #c0392b;
+  border-color: #c0392b;
+  color: #fff;
+}
+
+/* Custom Form Styles for Dark Mode */
+.form-control.dark-mode {
+  border-radius: 0.25rem 0 0 0.25rem;
+  border-color: #7f8c8d;
+  box-shadow: none;
+  display: inline-block;
+  flex-grow: 1;
+}
+
+.form-control.dark-mode:focus {
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 0.2rem rgba(231, 76, 60, 0.25);
+}
+
+/* Custom Alert Styles for Dark Mode */
+.alert-danger.dark-mode {
+  background-color: #c0392b;
+  color: #fff;
+}
+
+/* Custom Navbar Styles for Dark Mode */
+.navbar-dark.dark-mode .navbar-brand {
+  color: #ecf0f1;
+}
+
+.navbar-dark.dark-mode .navbar-nav .nav-link {
+  color: #ecf0f1;
+}
+
+.navbar-dark.dark-mode .navbar-nav .nav-link:hover {
+  color: #e74c3c;
+}
+
+.navbar.dark-mode {
+  background-color: #2c3e50;
+}
+
+/* Custom Card Styles for Dark Mode */
+.card.dark-mode {
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: #34495e;
+  color: #ecf0f1;
+}
+
+/* Custom styles for search-header */
+.search-header {
+  background-color: #333;
+  transition: top 0.3s;
+}
+
+/* Custom styles for search-form */
+.search-form {
+  display: flex;
+  align-items: center;
+  width: 45%;
+}
+
+.search-form .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  flex-grow: 1;
+}
+
+.search-form .btn-success {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin-left: -1px;
+}
+
+/* Custom styles for dark-mode toggle button */
+.toggle-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: inherit;
+  margin-left: 10px;
+}
+
+/* Remove underline from link */
+.no-underline {
+  text-decoration: none;
+}
+
+/* Custom styles for horizontal cards */
+.horizontal-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+  height: auto; /* Adjust the height */
+}
+
+.horizontal-card .card-img {
+  width: 150px; /* Adjust the width as needed */
+  height: 100%; /* Ensure the image fits within the card */
+  object-fit: cover; /* Ensure the image covers the card area */
+}
+
+.horizontal-card .card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align to the top */
+  width: 100%;
+}
+
+.horizontal-card .scrollable-text {
+  overflow-y: auto; /* Enable vertical scrolling for the text */
+  max-height: 150px; /* Set a fixed height for the text box */
+}
+
+.horizontal-card .card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.horizontal-card .small {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.horizontal-card .card-text {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+/* Custom styles for search results text */
+.search-results-text.light-mode {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.search-results-text.dark-mode {
+  color: #ecf0f1;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+/* Adjust margins for closer alignment */
+.mt-5.pt-5 {
+  margin-top: 2rem !important;
+  padding-top: 2rem !important;
+}
+
+/* Custom styles for Save button in cards */
+.horizontal-card .btn-info {
+  margin-left: auto;
+  align-self: center;
+  background-color: #3498db;
+  border-color: #3498db;
+  color: #fff;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+}
+
+.horizontal-card .btn-info.dark-mode {
+  background-color: #e74c3c;
+  border-color: #e74c3c;
+}
+
+/* Hover effect for cards */
+.horizontal-card {
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.horizontal-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Favorited button styling */
+.favorited {
+  background-color: #28a745 !important; /* Green color */
+  border-color: #28a745 !important;
+  color: #fff !important;
+}
+
+/* Remove from Favorites button styling */
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: #fff;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+  color: #fff;
 }
 
 .StripeElement { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }

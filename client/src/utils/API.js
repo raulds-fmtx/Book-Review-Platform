@@ -1,6 +1,6 @@
 // make a search to google books api
 // https://www.googleapis.com/books/v1/volumes?q=harry+potter
-const googleBooksApiKey = import.meta.env.VITE_GOOGLE_BOOKS_API_KEY;
+const googleBooksApiKey = 'AIzaSyBOZpIHo-PKvqz7q30OLsjSWlux74iPMM8'
 
 export const searchGoogleBooks = (query) => {
   return fetch(
