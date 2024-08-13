@@ -1,7 +1,7 @@
 // src/components/CheckoutForm.jsx
 import React, { useState } from 'react';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import '../App.css'
+import { createPaymentIntent } from "../utils/API";
 
 
 function CheckoutForm() {
@@ -17,13 +17,7 @@ function CheckoutForm() {
 
         try {
             // Make a POST request to create a PaymentIntent
-            const response = await fetch('/api/checkout/create-payment-intent', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ amount: 1000 }), // amount in cents
-            });
+            const response = await createPaymentIntent();
 
             if (!response.ok) {
                 throw new Error('Network response was not ok');
