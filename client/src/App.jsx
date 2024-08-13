@@ -15,9 +15,11 @@ const httpLink = createHttpLink({
   uri: 'http://localhost:3001/graphql',
 });
 
-const stripePublicKey = import.meta.env.VITE_STRIPE_PUBLIC_KEY;
+// const stripePublicKey = import.meta.env.VITE_STRIPE_PUBLIC_KEY;
 
-const stripePromise = loadStripe(stripePublicKey);
+const stripePromise = loadStripe(
+  "pk_test_51PkbfxJehy0qLGeS7tMlgMLEXz2cVfez6343heY8lteBkeRZzpPvClgWQPoSn1jCX2HBlPlHyt7T7feBwkWT7UAJ00BOYHuwvB"
+);
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('id_token');
