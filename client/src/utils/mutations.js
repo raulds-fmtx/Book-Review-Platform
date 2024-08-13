@@ -84,3 +84,23 @@ export const RATE_BOOK = gql`
     }
   }
 `;
+
+export const REVIEW_BOOK = gql`
+  mutation reviewBook($bookId: String!, $review: String!) {
+    reviewBook(bookId: $bookId, review: $review) {
+      _id
+      username
+      email
+      savedBooks {
+        bookId
+        authors
+        description
+        title
+        image
+        link
+        rating
+        review
+      }
+    }
+  }
+`;

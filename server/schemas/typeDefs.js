@@ -46,7 +46,6 @@ const typeDefs = gql`
     removeBook(bookId: String!): User
     rateBook(bookId: String!, rating: Int!): User
     reviewBook(bookId: String!, review: String!): User
-    setReaderStatus(bookId: String!, readStatus: Int!): User
   }
 `;
 
