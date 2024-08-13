@@ -200,7 +200,7 @@ h1, h2, h3, h4, h5, h6.dark-mode {
 }
 
 .horizontal-card .card-img {
-  width: 150px; /* Adjust the width as needed */
+  width: auto; /* Adjust the width as needed */
   height: 100%; /* Ensure the image fits within the card */
   object-fit: cover; /* Ensure the image covers the card area */
 }

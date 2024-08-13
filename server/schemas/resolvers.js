@@ -83,16 +83,16 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
-    setReaderStatus: async (parent, { bookId, readerStatus }, { user }) => {
-      if (user) {
-        return await User.findOneAndUpdate(
-          { _id: user._id, "savedBooks.bookId": bookId },
-          { $set: { "savedBooks.$.readerStatus": readerStatus } },
-          { new: true }
-        ).select("-__v -password");
-      }
-      throw new AuthenticationError("You need to be logged in!");
-    }
+    // setReaderStatus: async (parent, { bookId, readerStatus }, { user }) => {
+    //   if (user) {
+    //     return await User.findOneAndUpdate(
+    //       { _id: user._id, "savedBooks.bookId": bookId },
+    //       { $set: { "savedBooks.$.readerStatus": readerStatus } },
+    //       { new: true }
+    //     ).select("-__v -password");
+    //   }
+    //   throw new AuthenticationError("You need to be logged in!");
+    // }
   },
 };
 

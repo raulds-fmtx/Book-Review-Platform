@@ -38,6 +38,8 @@ export const SAVE_BOOK = gql`
         title
         image
         link
+        rating
+        review
       }
     }
   }
@@ -56,6 +58,28 @@ export const REMOVE_BOOK = gql`
         title
         image
         link
+        rating
+        review
+      }
+    }
+  }
+`;
+
+export const RATE_BOOK = gql`
+  mutation rateBook($bookId: String!, $rating: Int!) {
+    rateBook(bookId: $bookId, rating: $rating) {
+      _id
+      username
+      email
+      savedBooks {
+        bookId
+        authors
+        description
+        title
+        image
+        link
+        rating
+        review
       }
     }
   }
