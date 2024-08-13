@@ -10,58 +10,67 @@ const AppNavbar = () => {
 
   return (
     <>
-      <Navbar bg='dark' variant='dark' expand='lg'>
+      <Navbar bg="dark" variant="dark" expand="lg">
         <Container fluid>
-          <Navbar.Toggle aria-controls='navbar' />
-          <Navbar.Collapse id='navbar' className='d-flex justify-content-between'>
+          <Navbar.Toggle aria-controls="navbar" />
+          <Navbar.Collapse
+            id="navbar"
+            className="d-flex justify-content-between"
+          >
             <Nav>
-              <Nav.Link onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>
+              {Auth.loggedIn() ? (
+                <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
+              ) : (
+                <Nav.Link onClick={() => setShowModal(true)}>
+                  Login/Sign Up
+                </Nav.Link>
+              )}
             </Nav>
-            <Nav className='ml-auto'>
-              <Nav.Link as={Link} to='/'>
+            <Nav className="ml-auto">
+              <Nav.Link as={Link} to="/">
                 Search
               </Nav.Link>
               {/* stripe  donation link*/}
-              <Nav.Link as={Link} to='/donation'>
-                Donations
-              </Nav.Link>
               {/* if user is logged in show saved books and logout */}
               {Auth.loggedIn() ? (
                 <>
-                  <Nav.Link as={Link} to='/saved'>
-                     Favorites 
+                  <Nav.Link as={Link} to="/saved">
+                    Favorites
                   </Nav.Link>
-                  <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                 </>
               ) : null}
+              <Nav.Link as={Link} to="/donation">
+                Donations
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
       <Modal
-        size='lg'
+        size="lg"
         show={showModal}
         onHide={() => setShowModal(false)}
-        aria-labelledby='signup-modal'>
-        <Tab.Container defaultActiveKey='login'>
+        aria-labelledby="signup-modal"
+      >
+        <Tab.Container defaultActiveKey="login">
           <Modal.Header closeButton>
-            <Modal.Title id='signup-modal'>
-              <Nav variant='pills'>
+            <Modal.Title id="signup-modal">
+              <Nav variant="pills">
                 <Nav.Item>
-                  <Nav.Link eventKey='login'>Login</Nav.Link>
+                  <Nav.Link eventKey="login">Login</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link eventKey='signup'>Sign Up</Nav.Link>
+                  <Nav.Link eventKey="signup">Sign Up</Nav.Link>
                 </Nav.Item>
               </Nav>
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Tab.Content>
-              <Tab.Pane eventKey='login'>
+              <Tab.Pane eventKey="login">
                 <LoginForm handleModalClose={() => setShowModal(false)} />
               </Tab.Pane>
-              <Tab.Pane eventKey='signup'>
+              <Tab.Pane eventKey="signup">
                 <SignUpForm handleModalClose={() => setShowModal(false)} />
               </Tab.Pane>
             </Tab.Content>
