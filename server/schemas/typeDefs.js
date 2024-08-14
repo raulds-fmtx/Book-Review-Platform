@@ -1,5 +1,10 @@
 const { gql } = require("apollo-server-express");
+// added donation mutation under auth
 
+// type DonationResponse {
+//   success: Boolean!
+//   message: String
+// }
 const typeDefs = gql`
   type User {
     _id: ID
@@ -34,6 +39,7 @@ const typeDefs = gql`
     token: ID!
     user: User
   }
+
 
   type Query {
     me(id: String, username: String): User

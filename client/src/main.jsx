@@ -21,9 +21,14 @@ const router = createBrowserRouter([
         path: '/saved',
         element: <SavedBooks />
       },
+      // paths to stipe donation and success
       {
         path: '/donation',
         element: <CheckoutPage />
+      },
+      {
+        path:'/success',
+        element: <Success/>
       }
     ]
   }
@@ -31,4 +36,5 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <RouterProvider router={router} />
-)
+);
+

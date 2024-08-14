@@ -7,8 +7,6 @@ import {
 } from '@apollo/client';
 import { Outlet } from 'react-router-dom';
 import { setContext } from '@apollo/client/link/context';
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
 import Navbar from './components/Navbar';
 
 const httpLink = createHttpLink({
@@ -32,7 +30,6 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const client = new ApolloClient({
-  // Set up our client to execute the `authLink` middleware prior to making the request to our GraphQL API
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
@@ -40,12 +37,11 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <Elements stripe={stripePromise}>
         <Navbar />
         <Outlet />
-      </Elements>
     </ApolloProvider>
   );
+  
 }
 
 export default App;
