@@ -30,6 +30,8 @@ npm run develop
 
 ## Usage
 
+[Link to Deployed Application](https://book-review-platform-rwen.onrender.com/)
+
 To use the application, follow these steps:
 
 **Search for Books:**
