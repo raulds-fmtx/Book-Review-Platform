@@ -17,7 +17,6 @@ const typeDefs = gql`
     link: String
     rating: Int
     review: String
-    readerStatus: Int
   }
 
   input BookInput {
@@ -27,6 +26,8 @@ const typeDefs = gql`
     title: String!
     image: String
     link: String
+    rating: Int
+    review: String
   }
 
   type Auth {
@@ -43,9 +44,8 @@ const typeDefs = gql`
     addUser(username: String!, email: String!, password: String!): Auth
     saveBook(bookData: BookInput!): User
     removeBook(bookId: String!): User
-    rateBook(bookId: String!, rating: Float!): User
+    rateBook(bookId: String!, rating: Int!): User
     reviewBook(bookId: String!, review: String!): User
-    setReaderStatus(bookId: String!, readStatus: Int!): User
   }
 `;
 

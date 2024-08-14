@@ -200,8 +200,8 @@ h1, h2, h3, h4, h5, h6.dark-mode {
 }
 
 .horizontal-card .card-img {
-  width: 150px; /* Adjust the width as needed */
-  height: 100%; /* Ensure the image fits within the card */
+  width: 100%; /* Adjust the width as needed */
+  height: auto; /* Ensure the image fits within the card */
   object-fit: cover; /* Ensure the image covers the card area */
 }
 
@@ -214,7 +214,7 @@ h1, h2, h3, h4, h5, h6.dark-mode {
 
 .horizontal-card .scrollable-text {
   overflow-y: auto; /* Enable vertical scrolling for the text */
-  max-height: 150px; /* Set a fixed height for the text box */
+  max-height: 250px; /* Set a fixed height for the text box */
 }
 
 .horizontal-card .card-title {

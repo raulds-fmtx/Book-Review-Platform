@@ -91,7 +91,12 @@ const SearchBooks = () => {
 
     try {
       await saveBook({
-        variables: { bookData: bookToSave }
+        variables: { bookData: {
+          ...bookToSave, 
+          rating: 0, 
+          review: "",
+        }
+      }
       });
 
       setSavedBookIds([...savedBookIds, bookToSave.bookId]);
@@ -151,30 +156,30 @@ const SearchBooks = () => {
             <Col md="12" key={book.bookId} className="mb-4">
               <Card className={`horizontal-card ${darkMode ? 'dark-mode' : 'light-mode'}`} onMouseLeave={handleMouseLeave}>
                 <Row className="no-gutters">
-                  <Col md="2">
+                  <Col md="3">
                     {book.image && <Card.Img src={book.image} alt={`The cover for ${book.title}`} className="book-image" />}
                   </Col>
-                  <Col md="8">
+                  <Col md="9">
                     <Card.Body className="card-body">
                       <Card.Title>{book.title}</Card.Title>
                       <p className={`small ${darkMode ? 'dark-mode' : 'light-mode'}`}>Authors: {book.authors.join(', ')}</p>
                       <div className="scrollable-text">
                         <Card.Text>{book.description}</Card.Text>
                       </div>
+                      <Card.Text>
+                        {Auth.loggedIn() && (
+                          <Button
+                            disabled={savedBookIds?.some((savedBookId) => savedBookId === book.bookId)}
+                            className={`btn-info ${savedBookIds?.some((savedBookId) => savedBookId === book.bookId) ? 'favorited' : ''}`}
+                            onClick={() => handleSaveBook(book.bookId)}>
+                            {savedBookIds?.some((savedBookId) => savedBookId === book.bookId)
+                              ? 'Favorited'
+                              : 'Add to Favorites'}
+                          </Button>
+                        )}
+                      </Card.Text>
                     </Card.Body>
                   </Col>
-                  {Auth.loggedIn() && (
-                    <Col md="2" className="d-flex align-items-center justify-content-center">
-                      <Button
-                        disabled={savedBookIds?.some((savedBookId) => savedBookId === book.bookId)}
-                        className={`btn-info ${savedBookIds?.some((savedBookId) => savedBookId === book.bookId) ? 'favorited' : ''}`}
-                        onClick={() => handleSaveBook(book.bookId)}>
-                        {savedBookIds?.some((savedBookId) => savedBookId === book.bookId)
-                          ? 'Favorited'
-                          : 'Add to Favorites'}
-                      </Button>
-                    </Col>
-                  )}
                 </Row>
               </Card>
             </Col>
