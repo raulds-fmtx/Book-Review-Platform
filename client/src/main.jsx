@@ -21,14 +21,9 @@ const router = createBrowserRouter([
         path: '/saved',
         element: <SavedBooks />
       },
-      // paths to stipe donation and success
       {
         path: '/donation',
         element: <CheckoutPage />
-      },
-      {
-        path:'/success',
-        element: <Success/>
       }
     ]
   }
