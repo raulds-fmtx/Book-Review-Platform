@@ -1,61 +1,29 @@
-// src/components/CheckoutForm.jsx
-import React, { useState } from 'react';
-import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import { createPaymentIntent } from "../utils/API";
+import React, { useEffect, useState } from "react";
+import { defineCustomElements } from "stripe-stenciljs/dist/loader";
+import { useNavigate } from "react-router-dom";
 
-
-function CheckoutForm() {
-    const stripe = useStripe();
-    const elements = useElements();
-    const [loading, setLoading] = useState(false);
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        if (!stripe || !elements) return;
-
-        setLoading(true);
-
-        try {
-            // Make a POST request to create a PaymentIntent
-            const response = await createPaymentIntent();
-
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
-            const { clientSecret } = await response.json();
-
-            // Confirm the card payment
-            const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-                payment_method: {
-                    card: elements.getElement(CardElement),
-                },
-            });
-
-            if (error) {
-                console.error(error);
-                alert(`Payment failed: ${error.message}`);
-                setLoading(false);
-            } else if (paymentIntent.status === 'succeeded') {
-                console.log('Payment successful!');
-                alert('Payment successful!');
-                setLoading(false);
-            }
-        } catch (error) {
-            console.log('Payment error:', error);
-            alert('Payment error occurred.');
-            setLoading(false);
-        }
+function CheckoutPage() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    defineCustomElements(window);
+  }, []);
+  useEffect(() => {
+    const btnClick = (event) => {
+      const button = event.target.closest("button");
+      if (button) {
+        setTimeout(() => {
+          navigate("/");
+          window.location.reload(true);
+        }, 3000);
+      }
     };
+    document.addEventListener("click", btnClick);
+    return () => {
+      document.removeEventListener("click", btnClick);
+    };
+  }, [navigate]);
 
-    return (
-        <form onSubmit={handleSubmit}>
-            <CardElement className="StripeElement" />
-            <button type="submit" disabled={!stripe || loading}>
-                {loading ? 'Processing…' : 'Pay'}
-            </button>
-        </form>
-    );
+  return <stripe-component />;
 }
 
-export default CheckoutForm;
+export default CheckoutPage;

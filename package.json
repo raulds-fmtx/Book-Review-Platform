@@ -17,6 +17,7 @@
     "concurrently": "^8.2.0"
   },
   "dependencies": {
+    "@apollo/client": "^3.11.4",
     "dotenv": "^16.4.5",
     "react-scripts": "^5.0.1",
     "stripe": "^16.6.0"
